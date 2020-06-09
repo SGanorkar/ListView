@@ -89,7 +89,8 @@ public class CustomAdapter extends BaseAdapter implements Filterable
             }
             else
             {
-                temporarylist = (ArrayList<String>) results.values;
+                custNameList.clear();
+                custNameList.addAll((ArrayList<String>) results.values);
                 notifyDataSetChanged();
             }
         }
