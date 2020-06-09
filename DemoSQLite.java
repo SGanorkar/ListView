@@ -13,9 +13,7 @@ public class DemoSQLite extends SQLiteOpenHelper {
     public static final String TABLE_NAME = "customerData";
     public static final String col_0 = "CustId";
     public static final String col_1 = "FolderID";
-    public static final String col_2 = "FileID";
-
-
+   
     public DemoSQLite(@Nullable Context context)
     {
         super(context, DATABASE, null, 8);
@@ -26,8 +24,7 @@ public class DemoSQLite extends SQLiteOpenHelper {
     {
         sqLiteDatabase.execSQL("CREATE TABLE customerData" +
                                             "( CustId INTEGER PRIMARY KEY AUTOINCREMENT," +
-                                            "FolderID TEXT," +
-                                            "FileID TEXT)");
+                                            "CustName TEXT)"); 
     }
 
     @Override
@@ -37,14 +34,14 @@ public class DemoSQLite extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public void insertData (String FolderID, String FileID)
+    public void insertData (String CustID, String CustName)
     {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues;
         contentValues = new ContentValues();
 
-        contentValues.put(col_1, FolderID);
-        contentValues.put(col_2, FileID);
+        contentValues.put(col_0, CustID);
+        contentValues.put(col_1, CustName);
 
         sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
     }
@@ -52,20 +49,8 @@ public class DemoSQLite extends SQLiteOpenHelper {
     public Cursor getData()
     {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        Cursor result = sqLiteDatabase.rawQuery("SELECT FolderID, FileID FROM customerData", null);
+        Cursor result = sqLiteDatabase.rawQuery("SELECT CustID, CustName FROM customerData", null);
         return result;
-    }
-
-    public void updateData(String FileID)
-    {
-        String custId = "1";
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-
-        //contentValues.put(col_1, FolderID);
-        contentValues.put(col_2, FileID);
-
-        sqLiteDatabase.update(TABLE_NAME, contentValues, "CustId=?", new String[]{custId});
     }
 
 }
